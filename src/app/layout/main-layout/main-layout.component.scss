@@ -1,0 +1,17 @@
+.layout-container {
+  height: 100vh;
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.page-content {
+  padding: 16px;
+}
+
+a.active {
+  background-color: rgba(0, 0, 0, 0.1);
+}

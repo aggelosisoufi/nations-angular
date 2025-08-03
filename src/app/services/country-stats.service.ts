@@ -7,9 +7,9 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class CountryStatsService {
   private http = inject(HttpClient);
-  private baseUrl = `${environment.apiUrl}/stats`;
+  private baseUrl = `${environment.apiUrl}/country-stats`;
 
   getMaxGdpPerPopulation(): Observable<CountryMaxGdp[]> {
-    return this.http.get<CountryMaxGdp[]>(`${this.baseUrl}/max-gdp-per-population`);
+    return this.http.get<CountryMaxGdp[]>(`${this.baseUrl}/max-gdp-ratio`);
   }
 }

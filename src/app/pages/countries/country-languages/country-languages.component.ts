@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CountriesService } from '../../../services/countries.service';
+import { CountryLanguagesService } from '../../../services/country-languages.service';
 
 @Component({
   selector: 'app-country-languages',
@@ -12,7 +12,7 @@ import { CountriesService } from '../../../services/countries.service';
 })
 export class CountryLanguagesComponent {
   private route = inject(ActivatedRoute);
-  private countriesService = inject(CountriesService);
+  private countryLanguagesService = inject(CountryLanguagesService);
 
   readonly languages = signal<string[]>([]);
 
@@ -22,7 +22,7 @@ export class CountryLanguagesComponent {
   }
 
   loadLanguages(countryId: number): void {
-    this.countriesService.getLanguagesByCountryId(countryId).subscribe({
+    this.countryLanguagesService.getLanguagesByCountryId(countryId).subscribe({
       next: (res) => this.languages.set(res),
       error: (err) => console.error(err)
     });

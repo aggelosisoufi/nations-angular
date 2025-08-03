@@ -1,0 +1,25 @@
+<mat-sidenav-container class="layout-container">
+  <!-- Side Navigation -->
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      @for (item of menuItems; track item.route) {
+        <a mat-list-item [routerLink]="item.route" routerLinkActive="active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <!-- Top Toolbar -->
+    <mat-toolbar color="primary">
+      <span>Nation App</span>
+    </mat-toolbar>
+
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
