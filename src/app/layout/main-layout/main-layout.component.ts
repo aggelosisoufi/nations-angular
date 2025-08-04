@@ -27,6 +27,7 @@ import { NgFor } from '@angular/common';
 export class MainLayoutComponent {
   menuItems = [
     { label: 'Countries', route: '/countries', icon: 'public' },
-    { label: 'Max GDP/Population', route: '/stats/max-gdp', icon: 'bar_chart' }
+    { label: 'Max GDP/Population', route: '/stats/max-gdp', icon: 'bar_chart' },
+    { label: 'Search Stats', route: '/stats/search', icon: 'search' }
   ];
 }

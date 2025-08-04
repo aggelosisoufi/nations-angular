@@ -1,0 +1,83 @@
+<h2>Country Stats</h2>
+
+<!-- Filters -->
+<form [formGroup]="filterForm" (ngSubmit)="onApplyFilters()" class="filters">
+  <div class="filter-fields">
+    <mat-form-field>
+      <mat-label>Region ID</mat-label>
+      <input matInput type="number" formControlName="regionId" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Year From</mat-label>
+      <input matInput type="number" formControlName="yearFrom"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Year To</mat-label>
+      <input matInput type="number" formControlName="yearTo" />
+    </mat-form-field>
+  </div>
+  <div class="filter-actions">
+    <!-- Search Button -->
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!filterForm.valid"
+      [ngClass]="{ 'disabled-btn': !filterForm.valid }">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+
+    <!-- Reset Button -->
+    <button
+      mat-stroked-button
+      color="warn"
+      type="button"
+      (click)="onResetFilters()">
+      <mat-icon>refresh</mat-icon>
+      Reset
+    </button>
+  </div>
+</form>
+
+<!-- Data Table -->
+<table mat-table [dataSource]="stats()" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="countryName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+    <td mat-cell *matCellDef="let element">{{ element.countryName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="regionName">
+    <th mat-header-cell *matHeaderCellDef>Region</th>
+    <td mat-cell *matCellDef="let element">{{ element.regionName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
+    <td mat-cell *matCellDef="let element">{{ element.year }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="population">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Population</th>
+    <td mat-cell *matCellDef="let element">{{ element.population | number }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="gdp">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>GDP</th>
+    <td mat-cell *matCellDef="let element">{{ element.gdp | number }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [length]="totalElements()"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [pageSizeOptions]="[5, 10, 25]"
+  (page)="onPageChange($event)">
+</mat-paginator>
