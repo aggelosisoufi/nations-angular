@@ -11,15 +11,30 @@ import { CountryStatsSearchDto } from '../../../models/country-stats-search.mode
 import { CountryStatAdvancedFilter } from '../../../models/country-stats-filter.model';
 import { DecimalPipe, NgClass } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { RegionDto } from '../../../models/region';
+import { RegionService } from '../../../services/region.service';
 
 @Component({
   selector: 'app-country-stats',
   standalone: true,
   imports: [
-    MatTableModule, MatPaginatorModule, MatSortModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule,
-    FormsModule, ReactiveFormsModule, NgClass,
-    DecimalPipe
+    // Angular Common
+    NgClass,
+    DecimalPipe,
+    FormsModule, ReactiveFormsModule,
+
+    // Angular Material
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   templateUrl: './country-stats.component.html',
   styleUrls: ['./country-stats.component.scss'],
@@ -28,9 +43,11 @@ import { MatIconModule } from '@angular/material/icon';
 export class CountryStatsComponent {
   private statsService = inject(CountryStatAdvancedService);
   private fb = inject(FormBuilder);
+  private regionService = inject(RegionService);
 
   readonly stats = signal<CountryStatsSearchDto[]>([]);
   readonly totalElements = signal<number>(0);
+  readonly regions = signal<RegionDto[]>([]);
 
   displayedColumns = ['countryName', 'regionName', 'year', 'population', 'gdp'];
   pageIndex = 0;
@@ -44,6 +61,10 @@ export class CountryStatsComponent {
   });
 
   ngOnInit() {
+    this.regionService.getRegions().subscribe({
+      next: (res) => this.regions.set(res),
+      error: (err) => console.error(err)
+    });
     this.loadStats();
   }
 
