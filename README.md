@@ -1,59 +1,100 @@
-# NationApp
+# Nation Service Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Frontend for **Nation Service**, built with **Angular 19.2.14** using **standalone components**, **signals**, and **Angular Material**.  
+Implements a responsive dashboard with tables, filtering, pagination, and advanced search integrated with a Spring Boot backend.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📦 Tech Stack
 
-```bash
-ng serve
+- **Angular 19.2.14** (Standalone Components + Signals)
+- **Angular Material**
+- **Reactive Forms**
+- **RxJS**
+- **SCSS** styling
+- **TypeScript**
+
+---
+
+## 🚀 Features
+
+1. **Page 1 – Countries**
+   - Material table displaying `name`, `area`, and `countryCode2`
+   - Clicking a row navigates to **Languages page**
+
+2. **Page 2 – Max GDP / Population**
+   - Material table with columns: `name`, `year`, `population`, `gdp`
+   - Supports **server-side sorting** and **pagination**
+
+3. **Page 3 – Advanced Search**
+   - Filters by:
+     - **Region** (dynamic dropdown from backend)
+     - **Year range**
+   - **Reactive Forms** with validation and default values
+   - **Search & Reset** buttons with dynamic states
+   - Fully integrated with backend **pagination and sorting**
+
+---
+
+## 📂 Project Structure
+
+```
+src/
+ └── app
+      ├── layout/main-layout        # Main sidenav + toolbar layout
+      ├── models                    # Shared interfaces and DTOs
+      ├── pages
+      │    ├── countries            # Countries table + Languages page
+      │    └── stats                # Stats pages
+      │         ├── country-stats   # Page 3 – Advanced Search
+      │         └── max-gdp         # Page 2 – Max GDP/Population
+      ├── services                  # API services (Countries, Stats, Regions)
+      ├── app.component.ts
+      ├── app.component.scss
+      ├── app.routes.ts             # Angular standalone routing
+      └── app.config.ts             # HttpClient + Router providers
+ └── environments                   # Environment configs
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## ⚙️ Setup & Run
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. **Install dependencies**
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
+2. **Run the application**
 
 ```bash
-ng build
+ng serve --open
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+By default, the frontend runs on **http://localhost:4200**.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 🔗 API Integration
 
-```bash
-ng test
+- Backend: **Spring Boot 2.7.18 (Java 8)** at `http://localhost:8888`
+- Example call in `country-stats.component.ts`:
+
+```ts
+this.statsService.search(this.buildFilter(), this.pageIndex, this.pageSize, this.sort)
+  .subscribe(res => this.stats.set(res.content));
 ```
 
-## Running end-to-end tests
+- CORS is already configured in the backend
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## ✅ Notes
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Standalone Components** (no NgModules) with Angular 19 best practices  
+- **Signals** for state management (`signal<T>()`)  
+- **Reactive Forms** with validation, default values, and reset logic  
+- Material tables with **sorting, pagination, and filtering**  
+- Future‑ready: easy to add **resolvers, pipes, and custom directives**  
+- Ready to integrate with **mobile responsive layout** if needed
